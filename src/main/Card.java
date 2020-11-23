@@ -13,6 +13,11 @@ public class Card implements Comparable<Card> {
         suit = GENERATOR.nextInt(SUITS.length);
     }
 
+    public Card(int value) {
+        this.rank = value % 13;
+        this.suit = value / 13;
+    }
+
     public Card(int rank, int suit) {
         this.rank = rank;
         this.suit = suit;
