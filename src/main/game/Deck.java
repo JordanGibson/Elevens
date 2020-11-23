@@ -10,15 +10,15 @@ public class Deck extends Stack<Card> {
 
     public Deck(boolean isShuffled) {
         int[] sequentialArray = createSequentialArray();
-        if(isShuffled) {
-            for(int i = 0; i < sequentialArray.length; i++) {
+        if (isShuffled) {
+            for (int i = 0; i < sequentialArray.length; i++) {
                 int randomIndex = RANDOM.nextInt(sequentialArray.length);
                 int temp = sequentialArray[randomIndex];
                 sequentialArray[randomIndex] = sequentialArray[i];
                 sequentialArray[i] = temp;
             }
         }
-        for(int cardValue = 0; cardValue < 52; cardValue++) {
+        for (int cardValue = 0; cardValue < 52; cardValue++) {
             push(new Card(sequentialArray[cardValue]));
         }
     }

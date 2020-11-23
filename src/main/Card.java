@@ -1,6 +1,5 @@
 package main;
 
-import java.util.Dictionary;
 import java.util.Random;
 
 public class Card implements Comparable<Card> {

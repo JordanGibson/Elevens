@@ -18,7 +18,7 @@ public class Stack<T> implements StackInterface<T> {
     }
 
     public T peek() {
-        if(topNode == null) throw new EmptyStackException();
+        if (topNode == null) throw new EmptyStackException();
         else return topNode.getData();
     }
 
