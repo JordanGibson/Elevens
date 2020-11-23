@@ -1,5 +1,3 @@
-import model.Card;
-
 public class Program {
     public static void main(String[] args) {
         while (!Game.DECK.isEmpty()) {
