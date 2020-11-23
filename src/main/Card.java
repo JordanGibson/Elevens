@@ -3,26 +3,31 @@ package main;
 import java.util.Random;
 
 public class Card implements Comparable<Card> {
-    private final int RANK, SUIT;
-    private static final Random Generator = new Random();
+    private final int rank, suit;
+    private static final Random GENERATOR = new Random();
     private static final String[] RANKS = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"};
     private static final String[] SUITS = {"Clubs", "Diamonds", "Hearts", "Spades"};
 
     public Card() {
-        RANK = Generator.nextInt(RANKS.length);
-        SUIT = Generator.nextInt(SUITS.length);
+        rank = GENERATOR.nextInt(RANKS.length);
+        suit = GENERATOR.nextInt(SUITS.length);
+    }
+
+    public Card(int rank, int suit) {
+        this.rank = rank;
+        this.suit = suit;
     }
 
     public String getRank() {
-        return RANKS[RANK];
+        return RANKS[rank];
     }
 
     public String getSuit() {
-        return SUITS[SUIT];
+        return SUITS[suit];
     }
 
     public int getRankValue() {
-        return RANK;
+        return rank;
     }
 
     public String getColour() {
