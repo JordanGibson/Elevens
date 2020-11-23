@@ -21,6 +21,13 @@ public class Deck extends Stack<Card> {
         }
     }
 
+    public Card drawCard() {
+        if (isEmpty()) {
+            return null;
+        }
+        return pop();
+    }
+
     private static int[] createSequentialArray() {
         int[] result = new int[52];
         for (int i = 0; i < result.length; i++) {
