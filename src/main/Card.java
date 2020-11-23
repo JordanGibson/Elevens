@@ -1,5 +1,6 @@
 package main;
 
+import java.util.Dictionary;
 import java.util.Random;
 
 public class Card implements Comparable<Card> {
@@ -11,6 +12,11 @@ public class Card implements Comparable<Card> {
     public Card() {
         rank = GENERATOR.nextInt(RANKS.length);
         suit = GENERATOR.nextInt(SUITS.length);
+    }
+
+    public Card(int value) {
+        this.rank = value % 13;
+        this.suit = value / 13;
     }
 
     public Card(int rank, int suit) {

@@ -1,7 +1,11 @@
 package main;
 
+import main.game.Game;
+
 public class Program {
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        while(!Game.DECK.isEmpty()) {
+            System.out.println(Game.DECK.pop());
+        }
     }
 }
