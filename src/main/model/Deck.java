@@ -1,12 +1,12 @@
-package main.game;
+package model;
 
-import main.Card;
-import main.collection.Stack;
+import collection.Stack;
 
 import java.util.Random;
 
 public class Deck extends Stack<Card> {
     private static final Random RANDOM = new Random();
+    private int currentSize = 52;
 
     public Deck() {
         int[] sequentialArray = createSequentialArray();
@@ -16,8 +16,8 @@ public class Deck extends Stack<Card> {
             sequentialArray[randomIndex] = sequentialArray[i];
             sequentialArray[i] = temp;
         }
-        for (int cardValue = 0; cardValue < 52; cardValue++) {
-            push(new Card(sequentialArray[cardValue]));
+        for (int j : sequentialArray) {
+            push(new Card(j));
         }
     }
 
@@ -25,7 +25,12 @@ public class Deck extends Stack<Card> {
         if (isEmpty()) {
             return null;
         }
+        currentSize--;
         return pop();
+    }
+
+    public int getRemainingCardCount() {
+        return currentSize;
     }
 
     private static int[] createSequentialArray() {

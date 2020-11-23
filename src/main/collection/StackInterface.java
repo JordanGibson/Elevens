@@ -1,14 +1,14 @@
-package main.collection;
+package collection;
 
 public interface StackInterface<T> {
 
-    public void push(T newEntry);
+    void push(T newEntry);
 
-    public T pop();
+    T pop();
 
-    public T peek();
+    T peek();
 
-    public boolean isEmpty();
+    boolean isEmpty();
 
-    public void clear();
+    void clear();
 }
