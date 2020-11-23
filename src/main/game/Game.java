@@ -1,7 +1,11 @@
 package main.game;
 
+import main.Card;
+
 public class Game {
     public static Deck DECK = new Deck();
+    public static Card[] InPlay = new Card[9]; //placeholder for 3x3 grid
+    public static Deck ThrowPile = new Deck();//cards paired go here
 
     //(!Game.DECK.isEmpty())
 
