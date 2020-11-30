@@ -1,8 +1,6 @@
-package main.model;
+package model;
 
-import main.Game;
-
-import static main.model.UserInput.UserInputStatus.*;
+import static model.UserInput.UserInputStatus.*;
 
 public class UserInput {
 

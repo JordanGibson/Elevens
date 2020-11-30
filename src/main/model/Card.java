@@ -1,4 +1,4 @@
-package main.model;
+package model;
 
 import java.util.Random;
 
@@ -7,7 +7,7 @@ public class Card implements Comparable<Card> {
     private static final Random GENERATOR = new Random();
     private static final String[] RANKS = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"};
     private static final String[] SUITS = {"Clubs", "Hearts", "Spades", "Diamonds"};
-    public static final Card EMPTY = new Card(0);
+    private int value;
 
 
     public Card() {
@@ -18,16 +18,12 @@ public class Card implements Comparable<Card> {
     public Card(int value) {
         this.rank = value % 13;
         this.suit = value / 13;
+        this.value = value;
     }
 
     public Card(int rank, int suit) {
         this.rank = rank;
         this.suit = suit;
-    }
-
-    private Card(boolean isEmpty) {
-        this.rank = -1;
-        this.suit = -1;
     }
 
     public String getRank() {
@@ -58,5 +54,9 @@ public class Card implements Comparable<Card> {
     @Override
     public int compareTo(Card otherCard) {
         return Integer.compare(this.getRankValue(), otherCard.getRankValue());
+    }
+
+    public int getValue() {
+        return value;
     }
 }
