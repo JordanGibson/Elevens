@@ -1,6 +1,5 @@
-package main.game;
+package main.model;
 
-import main.Card;
 import main.collection.Stack;
 
 import java.util.Random;
