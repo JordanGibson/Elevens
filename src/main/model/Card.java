@@ -9,9 +9,10 @@ public class Card implements Comparable<Card> {
     private static final String[] SUITS = {"Clubs", "Hearts", "Spades", "Diamonds"};
     private int value;
 
+
     public Card() {
-        rank = GENERATOR.nextInt(RANKS.length);
-        suit = GENERATOR.nextInt(SUITS.length);
+        this.rank = GENERATOR.nextInt(RANKS.length);
+        this.suit = GENERATOR.nextInt(SUITS.length);
     }
 
     public Card(int value) {
@@ -39,6 +40,10 @@ public class Card implements Comparable<Card> {
 
     public String getColour() {
         return getSuit().equals("Diamonds") || getSuit().equals("Hearts") ? "Red" : "Black";
+    }
+
+    public boolean isFaceCard() {
+        return rank >= 10;
     }
 
     @Override
