@@ -14,11 +14,27 @@ public class Game {
         for (int i = 0; i < 9; i++) {
             inPlay[i] = DECK.drawCard();
         }
-        while (!isWon()) {
-            displayBoard();
+        displayBoard();
+        while (!isWon() && !isStalemate()) {
             makeTurn();
             configureInPlay();
+            displayBoard();
         }
+    }
+
+    private static boolean isStalemate() {
+        // Bruteforce approach
+        for (int first = ASCII_OFFSET; first < 9 + ASCII_OFFSET; first++) {
+            for (int second = first; second < 9 + ASCII_OFFSET; second++) {
+                for (int third = second; third < 9 + ASCII_OFFSET; third++) {
+                    if (first == second || second == third) continue;
+                    if (isValidPlayerMove((char) first, (char) second, (char) third)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     private static void configureInPlay() {

@@ -21,6 +21,13 @@ public class Deck extends Stack<Card> {
         }
     }
 
+    public Deck(int... cards) {
+        currentSize = cards.length;
+        for (var card : cards) {
+            push(new Card(card));
+        }
+    }
+
     public Card drawCard() {
         if (isEmpty()) {
             return null;
