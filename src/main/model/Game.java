@@ -1,6 +1,9 @@
 package model;
 
+import java.util.Arrays;
 import java.util.Scanner;
+import java.util.function.Predicate;
+import java.util.stream.IntStream;
 
 import static model.UserInput.UserInputStatus.Valid2Card;
 import static model.UserInput.UserInputStatus.Valid3Card;
@@ -23,18 +26,23 @@ public class Game {
     }
 
     private static boolean isStalemate() {
-        // Bruteforce approach
-        for (int first = ASCII_OFFSET; first < 9 + ASCII_OFFSET; first++) {
-            for (int second = first; second < 9 + ASCII_OFFSET; second++) {
-                for (int third = second; third < 9 + ASCII_OFFSET; third++) {
-                    if (first == second || second == third) continue;
-                    if (isValidPlayerMove((char) first, (char) second, (char) third)) {
-                        return false;
-                    }
-                }
+        // Better approach
+        for (char first = ASCII_OFFSET; first < 9 + ASCII_OFFSET; first++) {
+            Card firstCard = getCardFromBoard(first);
+            if (firstCard == null || firstCard.isFaceCard()) continue;
+            if (getUniqueInPlayCardValues(false)
+                    .anyMatch(value -> (firstCard.getRankValue() + value) == 9)) {
+                return false;
             }
         }
-        return true;
+        return getUniqueInPlayCardValues(true).sum() != 33;
+    }
+
+    private static IntStream getUniqueInPlayCardValues(boolean isFaceCards) {
+        return Arrays.stream(inPlay)
+                .filter(isFaceCards ? Card::isFaceCard : Predicate.not(Card::isFaceCard))
+                .mapToInt(Card::getRankValue)
+                .distinct();
     }
 
     private static void configureInPlay() {
