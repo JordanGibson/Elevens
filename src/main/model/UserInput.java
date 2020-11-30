@@ -12,7 +12,7 @@ public class UserInput {
     public UserInput(String input) {
         status = UserInputValidator.validate(input);
         if (!status.equals(Valid2Card) && !status.equals(Valid3Card)) {
-            first = second = third = 0;
+            first = second = third = '?';
             return;
         }
         var parsedInput = UserInputValidator.parseInput(input);
