@@ -1,4 +1,4 @@
-package main.collection;
+package collection;
 
 import java.util.EmptyStackException;
 
