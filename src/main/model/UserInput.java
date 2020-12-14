@@ -13,9 +13,13 @@ public class UserInput {
         status = UserInputValidator.validate(input);
         if (!status.equals(Valid2Card) && !status.equals(Valid3Card)) {
             first = second = third = '?';
+            if (status.equals(Hint)) {
+                Game.displayHint();
+                return;
+            }
             return;
         }
-        var parsedInput = UserInputValidator.parseInput(input);
+        var parsedInput = UserInputValidator.formatInput(input);
         first = parsedInput.charAt(0);
         second = parsedInput.charAt(1);
         third = parsedInput.length() == 3 ? parsedInput.charAt(2) : 0;
@@ -23,9 +27,11 @@ public class UserInput {
 
     private static class UserInputValidator {
         public static UserInputStatus validate(String input) {
-            var parsedInput = parseInput(input);
+            var parsedInput = formatInput(input);
             if (parsedInput.isEmpty()) {
                 return Empty;
+            } else if (parsedInput.length() == 1 && parsedInput.equals("X")) {
+                return Hint;
             } else if (parsedInput.length() != 2 && parsedInput.length() != 3) {
                 return InvalidNumberOfCards;
             }
@@ -47,7 +53,7 @@ public class UserInput {
 
         }
 
-        private static String parseInput(String input) {
+        private static String formatInput(String input) {
             return input.replaceAll(" ", "")
                     .replaceAll(",", "")
                     .toUpperCase();
@@ -56,6 +62,7 @@ public class UserInput {
 
     public enum UserInputStatus {
         Empty("Input was blank!"),
+        Hint(""),
         InvalidNumberOfCards("You must select 2 or 3 cards!"),
         SameCard("You must select unique cards!"),
         InvalidFirstCard("The first card you selected was not part of the game board!"),
