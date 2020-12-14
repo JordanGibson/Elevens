@@ -1,19 +1,21 @@
 package model;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
 
-import static model.UserInput.UserInputStatus.Valid2Card;
-import static model.UserInput.UserInputStatus.Valid3Card;
+import static model.UserInput.UserInputStatus.*;
 
 public class Game {
     public static Deck DECK = new Deck();
     public static Card[] inPlay = new Card[9]; //placeholder for 3x3 grid
+    public static Card[] discard = new Card[52];
     private static final int ASCII_OFFSET = 65;
 
     public static void start() {
+        DECK = new Deck();
         for (int i = 0; i < 9; i++) {
             inPlay[i] = DECK.drawCard();
         }
@@ -113,6 +115,11 @@ public class Game {
             System.out.println(userInput.status.getMessage());
             return false;
         }
+        applyUserInput(userInput);
+        return true;
+    }
+
+    public static boolean applyUserInput(UserInput userInput) {
         // After this point, we can assume that the user input is valid, as all validation is done within UserInputValidator
         if (isValidPlayerMove(userInput.first, userInput.second, userInput.third) &&
                 isSelectionValid(userInput.first) && isSelectionValid(userInput.second)) {
@@ -126,17 +133,53 @@ public class Game {
                     removeCardFromBoard(userInput.third);
                 } else {
                     System.out.println("Invalid selection for 3rd card");
+                    return false;
                 }
             }
         } else {
             // TODO: Improve this error handling logic
             System.out.println("Invalid selection for cards");
+            return false;
         }
         return true;
     }
 
+    public static String getHint() {
+        if (isStalemate()) return "";
+        for (char first = ASCII_OFFSET; first < 9 + ASCII_OFFSET; first++) {
+            Card firstCard = getCardFromBoard(first);
+            if (firstCard == null || firstCard.isFaceCard()) continue;
+            var otherCardValue = getUniqueInPlayCardValues(false)
+                    .filter(value -> (firstCard.getRankValue() + value) == 9)
+                    .findFirst().orElse(-1);
+            if (otherCardValue != -1)
+                return String.valueOf(Character.toUpperCase(first)) + (char) (getAsciiCharacterOfInPlay(otherCardValue));
+        }
+        return Character.toString(getAsciiCharacterOfInPlay(10))
+                + Character.toString(getAsciiCharacterOfInPlay(11))
+                + Character.toString(getAsciiCharacterOfInPlay(12));
+    }
+
+    public static boolean makeValidMove() {
+        UserInput userInput = new UserInput(getHint());
+        if (userInput.status.equals(Empty)) return false;
+        applyUserInput(userInput);
+        return true;
+    }
+
+    public static void displayHint() {
+        System.out.println("You requested a hint!\nPsst, your hint is " + getHint());
+    }
+
+
+    public static int getAsciiCharacterOfInPlay(int value) {
+        return IntStream.range(0, inPlay.length)
+                .filter(x -> inPlay[x].getRankValue() == value)
+                .findFirst().orElse(-999) + ASCII_OFFSET;
+    }
+
     public static boolean isWon() {
-        return inPlay.length == 0;
+        return Arrays.stream(inPlay).allMatch(Objects::isNull);
     }
 
     public static Card getCardFromBoard(char selection) {
@@ -148,6 +191,7 @@ public class Game {
     }
 
     public static void removeCardFromBoard(char selection) {
+        discard[(int) Arrays.stream(discard).filter(Objects::nonNull).count()] = inPlay[selection - ASCII_OFFSET];
         inPlay[selection - ASCII_OFFSET] = null;
     }
 
