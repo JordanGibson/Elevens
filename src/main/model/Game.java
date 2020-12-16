@@ -35,6 +35,7 @@ public class Game {
             if (getUniqueInPlayCardValues(false)
                     .anyMatch(value -> (firstCard.getRankValue() + value) == 9)) {
                 return false;
+
             }
         }
         return getUniqueInPlayCardValues(true).sum() != 33;
@@ -109,7 +110,8 @@ public class Game {
 
     // Returns if the move was valid or not
     public static boolean makeTurn() {
-        var rawUserInput = new Scanner(System.in).nextLine(); // TODO: Get user input, to be fixed in #8
+        System.out.println("Enter Letters: ");
+        var rawUserInput = new Scanner(System.in).nextLine();
         UserInput userInput = new UserInput(rawUserInput);
         if (userInput.status != Valid2Card && userInput.status != Valid3Card) {
             System.out.println(userInput.status.getMessage());
@@ -137,8 +139,12 @@ public class Game {
                 }
             }
         } else {
-            // TODO: Improve this error handling logic
-            System.out.println("Invalid selection for cards");
+            if(userInput.status == Valid2Card){
+                System.out.println("The two cards you have chosen do not add up to 11, try again!");
+            }
+            if(userInput.status == Valid3Card){
+                System.out.println("The three cards you have chosen are not a Jack, Queen or King, try again!");
+            }
             return false;
         }
         return true;
@@ -186,6 +192,7 @@ public class Game {
         try {
             return inPlay[selection - ASCII_OFFSET];
         } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println();
             return null;
         }
     }
