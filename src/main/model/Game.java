@@ -35,7 +35,6 @@ public class Game {
             if (getUniqueInPlayCardValues(false)
                     .anyMatch(value -> (firstCard.getRankValue() + value) == 9)) {
                 return false;
-
             }
         }
         return getUniqueInPlayCardValues(true).sum() != 33;
@@ -145,6 +144,7 @@ public class Game {
             if(userInput.status == Valid3Card){
                 System.out.println("The three cards you have chosen are not a Jack, Queen or King, try again!");
             }
+            System.out.println("Psst, if you're really stuck, you can type 'x' for a hint!");
             return false;
         }
         return true;
@@ -192,7 +192,6 @@ public class Game {
         try {
             return inPlay[selection - ASCII_OFFSET];
         } catch (ArrayIndexOutOfBoundsException e) {
-            System.out.println();
             return null;
         }
     }
