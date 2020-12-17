@@ -93,7 +93,8 @@ public class Game {
 
     // Returns if the move was valid or not
     public static boolean makeTurn() {
-        val rawUserInput = new Scanner(System.in).nextLine(); // TODO: Get user input, to be fixed in #8
+        System.out.println("Enter Letters: ");
+        val rawUserInput = new Scanner(System.in).nextLine();
         val userInput = new UserInput(rawUserInput);
         if (userInput.status == Hint) {
             displayHint();
@@ -124,7 +125,10 @@ public class Game {
                 }
             }
         } else {
-            System.out.println("Invalid selection for cards");
+                System.out.println((userInput.status == Valid2Card ? 
+                        "The two cards you have chosen do not add up to 11, try again!" : 
+                        "The three cards you have chosen are not a Jack, Queen or King, try again!") + 
+                        "\nPsst, if you're really stuck, you can type 'x' for a hint!");
             return false;
         }
         return true;
