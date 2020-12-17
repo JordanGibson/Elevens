@@ -15,15 +15,19 @@ public class Game {
     private static final int ASCII_OFFSET = 65;
 
     public static void start() {
-        DECK = new Deck();
-        for (int i = 0; i < 9; i++) {
-            inPlay[i] = DECK.drawCard();
-        }
+        initDeck();
         displayBoard();
         while (!isWon() && !isStalemate()) {
             makeTurn();
             configureInPlay();
             displayBoard();
+        }
+    }
+
+    public static void initDeck() {
+        DECK = new Deck();
+        for (int i = 0; i < 9; i++) {
+            inPlay[i] = DECK.drawCard();
         }
     }
 
