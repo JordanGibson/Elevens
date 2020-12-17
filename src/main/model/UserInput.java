@@ -13,10 +13,6 @@ public class UserInput {
         status = UserInputValidator.validate(input);
         if (!status.equals(Valid2Card) && !status.equals(Valid3Card)) {
             first = second = third = '?';
-            if (status.equals(Hint)) {
-                Game.displayHint();
-                return;
-            }
             return;
         }
         var parsedInput = UserInputValidator.formatInput(input);

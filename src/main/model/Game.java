@@ -9,15 +9,15 @@ import java.util.stream.IntStream;
 import static model.UserInput.UserInputStatus.*;
 
 public class Game {
-    public static Deck DECK = new Deck();
-    public static Card[] inPlay = new Card[9]; //placeholder for 3x3 grid
-    public static Card[] discard = new Card[52];
+    private static final Card[] inPlay = new Card[9]; //placeholder for 3x3 grid
+    private static Deck deck;
+    private static final Card[] discard = new Card[52];
     private static final int ASCII_OFFSET = 65;
 
     public static void start() {
-        DECK = new Deck();
+        deck = freshShuffledDeck();
         for (int i = 0; i < 9; i++) {
-            inPlay[i] = DECK.drawCard();
+            inPlay[i] = deck.drawCard();
         }
         displayBoard();
         while (!isWon() && !isStalemate()) {
@@ -51,27 +51,9 @@ public class Game {
         // Refill the deck
         for (int i = 0; i < inPlay.length; i++) {
             if (inPlay[i] == null) {
-                inPlay[i] = DECK.drawCard();
+                inPlay[i] = deck.drawCard();
             }
         }
-        // If there are empty spaces, push them all to the bottom
-        reformatInPlay();
-    }
-
-    private static void reformatInPlay() {
-        Card[] newInPlay = new Card[9];
-        int blanksToAdd = 0;
-        for (int i = 0; i < newInPlay.length; i++) {
-            if (inPlay[i] == null) {
-                blanksToAdd++;
-                continue;
-            }
-            newInPlay[i] = inPlay[i];
-        }
-        for (int i = 0; i < blanksToAdd; i++) {
-            newInPlay[8 - i] = null;
-        }
-        inPlay = newInPlay;
     }
 
     public static void displayBoard() {
@@ -111,6 +93,9 @@ public class Game {
     public static boolean makeTurn() {
         var rawUserInput = new Scanner(System.in).nextLine(); // TODO: Get user input, to be fixed in #8
         UserInput userInput = new UserInput(rawUserInput);
+        if (userInput.status == Hint) {
+            displayHint();
+        }
         if (userInput.status != Valid2Card && userInput.status != Valid3Card) {
             System.out.println(userInput.status.getMessage());
             return false;
@@ -137,7 +122,6 @@ public class Game {
                 }
             }
         } else {
-            // TODO: Improve this error handling logic
             System.out.println("Invalid selection for cards");
             return false;
         }
@@ -193,6 +177,10 @@ public class Game {
     public static void removeCardFromBoard(char selection) {
         discard[(int) Arrays.stream(discard).filter(Objects::nonNull).count()] = inPlay[selection - ASCII_OFFSET];
         inPlay[selection - ASCII_OFFSET] = null;
+    }
+
+    public static Deck freshShuffledDeck() {
+        return new Deck();
     }
 
     // In here, we should be validating if the selected character is in the game board, and if there is a card at this location on the board
