@@ -138,13 +138,10 @@ public class Game {
                 }
             }
         } else {
-            if(userInput.status == Valid2Card){
-                System.out.println("The two cards you have chosen do not add up to 11, try again!");
-            }
-            if(userInput.status == Valid3Card){
-                System.out.println("The three cards you have chosen are not a Jack, Queen or King, try again!");
-            }
-            System.out.println("Psst, if you're really stuck, you can type 'x' for a hint!");
+                System.out.println((userInput.status == Valid2Card ? 
+                        "The two cards you have chosen do not add up to 11, try again!" : 
+                        "The three cards you have chosen are not a Jack, Queen or King, try again!") + 
+                        "\nPsst, if you're really stuck, you can type 'x' for a hint!");
             return false;
         }
         return true;
