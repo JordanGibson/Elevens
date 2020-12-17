@@ -1,5 +1,7 @@
 package model;
 
+import lombok.val;
+
 import static model.UserInput.UserInputStatus.*;
 
 public class UserInput {
@@ -15,7 +17,7 @@ public class UserInput {
             first = second = third = '?';
             return;
         }
-        var parsedInput = UserInputValidator.formatInput(input);
+        val parsedInput = UserInputValidator.formatInput(input);
         first = parsedInput.charAt(0);
         second = parsedInput.charAt(1);
         third = parsedInput.length() == 3 ? parsedInput.charAt(2) : 0;
@@ -23,7 +25,7 @@ public class UserInput {
 
     private static class UserInputValidator {
         public static UserInputStatus validate(String input) {
-            var parsedInput = formatInput(input);
+            val parsedInput = formatInput(input);
             if (parsedInput.isEmpty()) {
                 return Empty;
             } else if (parsedInput.length() == 1 && parsedInput.equals("X")) {
@@ -32,9 +34,9 @@ public class UserInput {
                 return InvalidNumberOfCards;
             }
 
-            char first = parsedInput.charAt(0);
-            char second = parsedInput.charAt(1);
-            char third = parsedInput.length() > 2 ? parsedInput.charAt(2) : 0;
+            val first = parsedInput.charAt(0);
+            val second = parsedInput.charAt(1);
+            val third = parsedInput.length() > 2 ? parsedInput.charAt(2) : 0;
 
             if (first == second || first == third || second == third) {
                 return SameCard;
