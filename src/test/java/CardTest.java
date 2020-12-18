@@ -1,18 +1,29 @@
+import com.tngtech.java.junit.dataprovider.DataProvider;
+import com.tngtech.java.junit.dataprovider.DataProviderRunner;
+import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import model.Card;
-import model.Deck;
-import org.assertj.core.api.Assertions;
-import org.hamcrest.core.IsNot;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import java.util.Arrays;
-import java.util.Comparator;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
+@RunWith(DataProviderRunner.class)
 public class CardTest {
+
+    @DataProvider
+    public static Object[][] cardExamples() {
+        return new Object[][]{
+                {0, "Ace of Clubs"},
+                {12, "King of Clubs"},
+                {15, "3 of Hearts"},
+                {40, "2 of Diamonds"}
+        };
+    }
+
     @Test
-    public void BoilerplateTest() {
-        assertThat(1, is(1));
+    @UseDataProvider("cardExamples")
+    public void cardToStringWorks(int input, String expected) {
+        Card card = new Card(input);
+        assertTrue(card.toString().equals(expected));
     }
 }
