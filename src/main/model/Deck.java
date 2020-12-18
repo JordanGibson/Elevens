@@ -1,30 +1,25 @@
 package model;
 
 import collection.Stack;
+import lombok.val;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class Deck extends Stack<Card> {
+public class Deck extends Stack<Card> implements Serializable {
     private static final Random RANDOM = new Random();
     private int currentSize = 52;
 
     public Deck() {
-        int[] sequentialArray = createSequentialArray();
+        val sequentialArray = createSequentialArray();
         for (int i = 0; i < sequentialArray.length; i++) {
-            int randomIndex = RANDOM.nextInt(sequentialArray.length);
-            int temp = sequentialArray[randomIndex];
+            val randomIndex = RANDOM.nextInt(sequentialArray.length);
+            val temp = sequentialArray[randomIndex];
             sequentialArray[randomIndex] = sequentialArray[i];
             sequentialArray[i] = temp;
         }
         for (int j : sequentialArray) {
             push(new Card(j));
-        }
-    }
-
-    public Deck(int... cards) {
-        currentSize = cards.length;
-        for (var card : cards) {
-            push(new Card(card));
         }
     }
 
@@ -41,7 +36,7 @@ public class Deck extends Stack<Card> {
     }
 
     private static int[] createSequentialArray() {
-        int[] result = new int[52];
+        val result = new int[52];
         for (int i = 0; i < result.length; i++) {
             result[i] = i;
         }
