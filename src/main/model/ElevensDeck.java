@@ -5,6 +5,7 @@ import lombok.val;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static model.Game.ASCII_OFFSET;
@@ -104,11 +105,21 @@ public class ElevensDeck extends Deck implements Serializable {
                 + Character.toString(context.getAsciiCharacterOfInPlay(12));
     }
 
-    public boolean makeValidMove() {
+    public PlayerMoveHistory.PlayerMoveHistoryEntry makeValidMove(Card[] inPlay) {
         val userInput = new UserInput(getHint(), context);
-        if (userInput.status.equals(Empty)) return false;
-        getCardsToRemove(userInput);
-        return true;
+        if (userInput.status.equals(Empty)) return null;
+        Card[] cardsToPlay = Arrays.stream(getCardFromBoard(userInput.third) == null ?
+                new Card[]{
+                        getCardFromBoard(userInput.first), getCardFromBoard(userInput.second)
+                } :
+                new Card[]{
+                        getCardFromBoard(userInput.first), getCardFromBoard(userInput.second), getCardFromBoard(userInput.third)
+                }).toArray(Card[]::new);
+        System.out.println("\nRemoved " + Arrays.stream(cardsToPlay)
+                .map(Card::toString)
+                .collect(Collectors.joining(" and ")) + "\n");
+        Arrays.stream(getCardsToRemove(userInput)).forEach(card -> removeCardFromBoard(inPlay, card));
+        return new PlayerMoveHistory.PlayerMoveHistoryEntry(cardsToPlay);
     }
 
     protected void removeCardFromBoard(Card[] inPlay, Card card) {
@@ -123,5 +134,9 @@ public class ElevensDeck extends Deck implements Serializable {
                 })
                 .findFirst()
                 .ifPresent(index -> inPlay[index] = null);
+    }
+
+    public Game getContext() {
+        return context;
     }
 }

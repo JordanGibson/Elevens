@@ -6,7 +6,7 @@ import lombok.val;
 import java.io.Serializable;
 import java.util.Random;
 
-public class Deck extends Stack<Card> implements Serializable {
+public abstract class Deck extends Stack<Card> implements Serializable {
     private static final Random RANDOM = new Random();
     private int currentSize = 52;
 

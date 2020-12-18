@@ -1,13 +1,13 @@
-package collection;
+package model;
 
+import collection.Queue;
 import lombok.val;
-import model.Card;
-import model.ElevensDeck;
 import org.apache.commons.lang3.SerializationUtils;
 
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class PlayerMoveHistory implements Serializable {
@@ -30,7 +30,7 @@ public class PlayerMoveHistory implements Serializable {
     }
 
     public void replay() {
-        System.out.println("\n\n\n\n\n\n\n\n\n\n\n NOW REPLAYING \n\n\n\n\n\n\n\n\n");
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n NOW REPLAYING \n\n\n\n\n\n\n\n\n\n\n");
         currentDeckState = initialDeckState;
         currentInPlayState = initialInPlayState;
         val playerMoves = getPlayerMoves();
@@ -44,12 +44,14 @@ public class PlayerMoveHistory implements Serializable {
                     new Card[]{playerMove.first, playerMove.second, playerMove.third})
                     .map(Card::toString)
                     .collect(Collectors.joining(" and ")) + "\n");
+            new Scanner(System.in).nextLine();
             for (int i = 0; i < currentInPlayState.length; i++) {
                 if (currentInPlayState[i] == null) {
                     currentInPlayState[i] = currentDeckState.drawCard();
                 }
             }
         }
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n END OF REPLAY \n\n\n\n\n\n\n\n\n\n\n");
     }
 
     public PlayerMoveHistoryEntry[] getPlayerMoves() {
@@ -61,4 +63,27 @@ public class PlayerMoveHistory implements Serializable {
         Arrays.stream(playerMoves).sorted(PlayerMoveHistoryEntry::compareTo).forEach(log -> newPlayerMoves[(int) Arrays.stream(newPlayerMoves).filter(Objects::nonNull).count()] = log);
         return newPlayerMoves;
     }
+
+    public static class PlayerMoveHistoryEntry implements Comparable<PlayerMoveHistoryEntry>, Serializable {
+        public final Card first;
+        public final Card second;
+        public final Card third;
+        private int playOrder;
+
+        public PlayerMoveHistoryEntry(Card... cards) {
+            this.first = cards[0];
+            this.second = cards[1];
+            this.third = cards.length == 3 ? cards[2] : null;
+        }
+
+        @Override
+        public int compareTo(PlayerMoveHistoryEntry o) {
+            return Integer.compare(playOrder, o.playOrder);
+        }
+
+        public void setPlayOrder(int playOrder) {
+            this.playOrder = playOrder;
+        }
+    }
+
 }
