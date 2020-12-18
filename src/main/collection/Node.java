@@ -2,12 +2,12 @@ package collection;
 
 import java.io.Serializable;
 
-public class MyNode<T> implements Serializable {
+public class Node<T> implements Serializable {
 
     private final T data;
-    private MyNode<T> next;
+    private Node<T> next;
 
-    public MyNode(T dataValue) {
+    public Node(T dataValue) {
         data = dataValue;
         next = null;
     }
@@ -16,11 +16,11 @@ public class MyNode<T> implements Serializable {
         return data;
     }
 
-    public MyNode<T> getNext() {
+    public Node<T> getNext() {
         return next;
     }
 
-    public void setNext(MyNode<T> next) {
+    public void setNext(Node<T> next) {
         this.next = next;
     }
 

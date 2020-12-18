@@ -5,7 +5,7 @@ import model.Card;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RunWith(DataProviderRunner.class)
 public class CardTest {
@@ -24,6 +24,6 @@ public class CardTest {
     @UseDataProvider("cardExamples")
     public void cardToStringWorks(int input, String expected) {
         Card card = new Card(input);
-        assertTrue(card.toString().equals(expected));
+        assertEquals(expected, card.toString());
     }
 }

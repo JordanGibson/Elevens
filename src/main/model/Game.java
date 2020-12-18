@@ -28,7 +28,36 @@ public class Game implements Serializable {
         this.deck = deck;
     }
 
-    public void start() {
+    public void displayMenu() {
+        var choice = 0; // 0 will allow the switch case to display the menu again as anything not between 1 - 4 is an incorrect option
+        System.out.println("Buckle up bucko we playing elevens now");
+        System.out.print("1 --> Play Game\n2 --> Rules\n3 --> Play Demonstration Game\n4 --> Quit\n\nEnter option: ");
+
+        try {
+            choice = Integer.parseInt(scanner.nextLine());
+        } catch (NumberFormatException ignored) {
+        }
+
+        switch (choice) {
+            case 1:
+                startGame();
+                break;
+            case 2:
+                gameRules();
+                displayMenu();
+                break;
+            case 3:
+                startAutomatedGame();
+                break;
+            case 4:
+                return;
+            default:
+                System.out.println("Please choose a correct option");
+                displayMenu();
+        }
+    }
+
+    public void startGame() {
         preStartRoutine();
         while (!isWon() && !isStalemate()) {
             makeTurn();
@@ -57,34 +86,6 @@ public class Game implements Serializable {
         } while (isStalemate());
         playerMoveHistory = new PlayerMoveHistory(deck, inPlay);
         displayBoard();
-    }
-
-    public void displayMenu() {
-        var choice = 0; // 0 will allow the switch case to display the menu again as anything not between 1 - 4 is an incorrect option
-        System.out.println("Buckle up bucko we playing elevens now");
-        System.out.print("1 --> Play Game\n2 --> Rules\n3 --> Play Demonstration Game\n4 --> Quit\n\nEnter option: ");
-
-        try {
-            choice = Integer.parseInt(scanner.nextLine());
-        } catch (NumberFormatException ignored) {
-        }
-
-        switch (choice) {
-            case 1:
-                start();
-                break;
-            case 2:
-                gameRules();
-                displayMenu();
-                break;
-            case 3:
-                startAutomatedGame();
-            case 4:
-                return;
-            default:
-                System.out.println("Please choose a correct option");
-                displayMenu();
-        }
     }
 
     public void initBoard() {

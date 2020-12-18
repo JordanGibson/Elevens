@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 public class Queue<T extends Comparable<T>> implements QueueInterface<T>, Serializable {
 
-    private MyNode<T> front;
+    private Node<T> front;
 
     public Queue() {
         front = null;
@@ -15,7 +15,7 @@ public class Queue<T extends Comparable<T>> implements QueueInterface<T>, Serial
 
     public void enqueue(T anEntry) {
 
-        val newNode = new MyNode<>(anEntry);
+        val newNode = new Node<>(anEntry);
 
         if (front == null) {
             front = newNode;
@@ -23,7 +23,7 @@ public class Queue<T extends Comparable<T>> implements QueueInterface<T>, Serial
             newNode.setNext(front);
             front = newNode;
         } else {
-            MyNode<T> currentNode = new MyNode<>(front.getData());
+            var currentNode = new Node<>(front.getData());
             while (currentNode.getNext() != null && (currentNode.getData().compareTo(newNode.getData()) > 0)) {
                 currentNode = currentNode.getNext();
             }

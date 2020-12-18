@@ -6,10 +6,10 @@ import java.io.Serializable;
 import java.util.EmptyStackException;
 
 public class Stack<T> implements StackInterface<T>, Serializable {
-    private MyNode<T> topNode;
+    private Node<T> topNode;
 
     public void push(T newEntry) {
-        val newNode = new MyNode<>(newEntry);
+        val newNode = new Node<>(newEntry);
         newNode.setNext(topNode);
         topNode = newNode;
     }
