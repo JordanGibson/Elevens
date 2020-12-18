@@ -1,15 +1,7 @@
-import model.Card;
 import model.Deck;
 import model.UserInput;
-import org.assertj.core.api.Assertions;
-import org.hamcrest.core.IsNot;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.Comparator;
-
-import static model.Game.*;
-import static model.Game.displayBoard;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 

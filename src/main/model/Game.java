@@ -37,13 +37,13 @@ public class Game implements Serializable {
         playerMoveHistory.replay();
     }
 
-    private void initBoard() {
+    public void initBoard() {
         for (int i = 0; i < 9; i++) {
             inPlay[i] = deck.drawCard();
         }
     }
 
-    protected IntStream getUniqueInPlayCardValues(boolean isFaceCards) {
+    public IntStream getUniqueInPlayCardValues(boolean isFaceCards) {
         return Arrays.stream(inPlay)
                 .filter(Objects::nonNull)
                 .filter(isFaceCards ? Card::isFaceCard : Predicate.not(Card::isFaceCard))
@@ -51,7 +51,7 @@ public class Game implements Serializable {
                 .distinct();
     }
 
-    private void refillInPlay() {
+    public void refillInPlay() {
         // Refill the deck
         for (int i = 0; i < inPlay.length; i++) {
             if (inPlay[i] == null) {
@@ -60,13 +60,13 @@ public class Game implements Serializable {
         }
     }
 
-    protected void displayBoard() {
+    public void displayBoard() {
         for (int i = 0; i < 9; i++) {
             System.out.printf("%s: %s\n", (char) ('A' + i), inPlay[i]);
         }
     }
 
-    protected void makeTurn() {
+    public void makeTurn() {
         System.out.print("Enter Letters: ");
         val rawUserInput = new Scanner(System.in).nextLine();
         val userInput = new UserInput(rawUserInput, this);
@@ -85,18 +85,18 @@ public class Game implements Serializable {
         }
     }
 
-    protected void displayHint() {
+    public void displayHint() {
         System.out.println("You requested a hint!\nPsst, your hint is " + deck.getHint());
     }
 
-    protected int getAsciiCharacterOfInPlay(int value) {
+    public int getAsciiCharacterOfInPlay(int value) {
         return IntStream.range(0, inPlay.length)
                 .filter(x -> inPlay[x].getRankValue() == value)
                 .findFirst()
                 .orElse(-999) + ASCII_OFFSET;
     }
 
-    protected boolean isStalemate() {
+    public boolean isStalemate() {
         for (char first = ASCII_OFFSET; first < 9 + ASCII_OFFSET; first++) {
             val firstCard = getCardFromBoard(first);
             if (firstCard == null || firstCard.isFaceCard()) continue;
@@ -111,11 +111,11 @@ public class Game implements Serializable {
         return getUniqueInPlayCardValues(true).sum() != 33;
     }
 
-    protected boolean isWon() {
+    public boolean isWon() {
         return Arrays.stream(inPlay).allMatch(Objects::isNull);
     }
 
-    protected Card getCardFromBoard(char selection) {
+    public Card getCardFromBoard(char selection) {
         try {
             return inPlay[selection - ASCII_OFFSET];
         } catch (ArrayIndexOutOfBoundsException e) {
@@ -123,7 +123,7 @@ public class Game implements Serializable {
         }
     }
 
-    protected void removeCardFromBoard(Card card) {
+    public void removeCardFromBoard(Card card) {
         Arrays.stream(IntStream.range(0, inPlay.length)
                 .toArray())
                 .filter(index -> {
@@ -138,7 +138,7 @@ public class Game implements Serializable {
     }
 
     // In here, we should be validating if the selected character is in the game board, and if there is a card at this location on the board
-    protected boolean isSelectionValid(char selection) {
+    public boolean isSelectionValid(char selection) {
         return !(selection < 'A' || selection > 'I' || inPlay[selection - ASCII_OFFSET] == null);
     }
 }

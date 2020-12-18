@@ -4,10 +4,12 @@ import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import model.Deck;
 import model.Game;
 import model.UserInput;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-import static model.Game.*;
 import static model.UserInput.UserInputStatus.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -15,6 +17,14 @@ import static org.junit.Assert.assertThat;
 @SuppressWarnings("ALL")
 @RunWith(DataProviderRunner.class)
 public class UserInputTest {
+
+    @Mock
+    private Game context;
+
+    @Before
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
 
     @DataProvider
     public static Object[][] badInput() {
