@@ -29,4 +29,28 @@ The project Structure -
 
 ## Testing
 
-The testing – we have done a couple tests such as DeckTest, InputTest and a general GameTest all of these are their own classes with a test collection in the project so you are able to look at the different methods with their own tests in the project
+The testing – we have done a couple tests such as DeckTest, InputTest and a general GameTest all of these are their own classes with a test collection in the project so that you are able to look at the different methods with their own tests in the project.
+
+####UserInput test
+
+the userinput tests are used to find problems in the users inputs into the game (e.g. picking pairs and triplets)
+
+these tests cover:
+* ensuring a user input will return one of 9 different enums for informing the user of correct inputs
+* only sets first and second card but not the third card when valid2card enum is returned
+* sets all 3 cards if valid3card enum is returned
+* sanitises inputs from user to remove all spaces and commas and raises input to uppercase
+
+####Deck test
+
+the decktest tests cover cases to show that the deck class works perfectly as intended and has no bugs whatsoever plz dont look there.
+
+these tests cover:
+* Deck has 52 cards in it (no jokers we don't like jokers)
+* when drawing a card it removes one from the stack and doesnt take more or less than 1 card.
+* deck does not have duplicate cards in it (a full deck of 52 king of clubs does not make the game play well)
+* deck is shuffled on initialisation (makes each game different)
+
+
+
+
