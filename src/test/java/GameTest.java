@@ -1,6 +1,3 @@
-import com.tngtech.java.junit.dataprovider.UseDataProvider;
-import model.Deck;
-import model.UserInput;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;

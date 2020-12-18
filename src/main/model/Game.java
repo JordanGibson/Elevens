@@ -23,6 +23,14 @@ public class Game implements Serializable {
     private PlayerMoveHistory playerMoveHistory;
     private ElevensDeck deck;
 
+    public Game() {
+        this.deck = new ElevensDeck(this);
+    }
+
+    public Game(ElevensDeck deck) {
+        this.deck = deck;
+    }
+
     public void start() {
         deck = new ElevensDeck(this);
         initBoard();
