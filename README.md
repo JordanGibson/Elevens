@@ -51,6 +51,9 @@ these tests cover:
 * deck does not have duplicate cards in it (a full deck of 52 king of clubs does not make the game play well)
 * deck is shuffled on initialisation (makes each game different)
 
+####Card Test
+
+there is only one test in card test, which checks to make sure the tostring() method correctly returns the name of the card chosen.
 
 
 
