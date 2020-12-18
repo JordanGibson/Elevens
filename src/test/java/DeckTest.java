@@ -1,3 +1,4 @@
+import lombok.val;
 import model.Card;
 import model.Deck;
 import org.assertj.core.api.Assertions;
@@ -12,23 +13,23 @@ import static org.junit.Assert.assertThat;
 
 public class DeckTest {
     @Test
-    public void DeckShouldBe52Cards() {
-        Deck deck = new Deck();
+    public void deckShouldBe52Cards() {
+        val deck = new Deck();
         assertThat(deck.getRemainingCardCount(), is(52));
     }
 
     @Test
-    public void DeckSizeReducesBy1WhenCardDrawn() {
-        Deck deck = new Deck();
+    public void deckSizeReducesBy1WhenCardDrawn() {
+        val deck = new Deck();
         assertThat(deck.getRemainingCardCount(), is(52));
         deck.drawCard();
         assertThat(deck.getRemainingCardCount(), is(51));
     }
 
     @Test
-    public void DeckDoesNotContainDuplicates() {
-        Deck deck = new Deck();
-        Card[] cards = new Card[52];
+    public void deckDoesNotContainDuplicates() {
+        val deck = new Deck();
+        val cards = new Card[52];
         for (int i = 0; !deck.isEmpty(); i++) {
             cards[i] = deck.pop();
         }
@@ -36,13 +37,13 @@ public class DeckTest {
     }
 
     @Test
-    public void DeckIsShuffled() {
-        Deck deck = new Deck();
-        Card[] cards = new Card[52];
+    public void deckIsShuffled() {
+        val deck = new Deck();
+        val cards = new Card[52];
         for (int i = 0; !deck.isEmpty(); i++) {
             cards[i] = deck.pop();
         }
-        var sortedDeck = Arrays.stream(cards).sorted(Comparator.comparing(Card::getValue).reversed()).toArray();
+        val sortedDeck = Arrays.stream(cards).sorted(Comparator.comparing(Card::getValue).reversed()).toArray();
         assertThat(cards, IsNot.not(sortedDeck));
     }
 }

@@ -1,8 +1,10 @@
 package collection;
 
-public class MyNode<T> {
+import java.io.Serializable;
 
-    private T data;
+public class MyNode<T> implements Serializable {
+
+    private final T data;
     private MyNode<T> next;
 
     public MyNode(T dataValue) {
@@ -16,10 +18,6 @@ public class MyNode<T> {
 
     public MyNode<T> getNext() {
         return next;
-    }
-
-    public void setData(T data) {
-        this.data = data;
     }
 
     public void setNext(MyNode<T> next) {
