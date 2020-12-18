@@ -34,16 +34,18 @@ The testing – we have done a couple tests such as DeckTest, InputTest and a ge
 ####UserInput test
 
 the userinput tests are used to find problems in the users inputs into the game (e.g. picking pairs and triplets)
+has 4 test categories
 
 these tests cover:
-* ensuring a user input will return one of 9 different enums for informing the user of correct inputs
-* only sets first and second card but not the third card when valid2card enum is returned
-* sets all 3 cards if valid3card enum is returned
-* sanitises inputs from user to remove all spaces and commas and raises input to uppercase
+* ensuring a user input will return one of 9 different enums for informing the user of correct inputs (10 tests)
+* only sets first and second card but not the third card when valid2card enum is returned (1 test)
+* sets all 3 cards if valid3card enum is returned (1 test)
+* sanitises inputs from user to remove all spaces and commas and raises input to uppercase (13 tests)
 
 ####Deck test
 
-the decktest tests cover cases to show that the deck class works perfectly as intended and has no bugs whatsoever plz dont look there.
+the decktest tests cover cases to show that the deck class functions as a normal deck of cards would.
+has 4 test categories in it 
 
 these tests cover:
 * Deck has 52 cards in it (no jokers we don't like jokers)
