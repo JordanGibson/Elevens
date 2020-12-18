@@ -23,6 +23,14 @@ public abstract class Deck extends Stack<Card> implements Serializable {
         }
     }
 
+    private static int[] createSequentialArray() {
+        val result = new int[52];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = i;
+        }
+        return result;
+    }
+
     public Card drawCard() {
         if (isEmpty()) {
             return null;
@@ -33,13 +41,5 @@ public abstract class Deck extends Stack<Card> implements Serializable {
 
     public int getRemainingCardCount() {
         return currentSize;
-    }
-
-    private static int[] createSequentialArray() {
-        val result = new int[52];
-        for (int i = 0; i < result.length; i++) {
-            result[i] = i;
-        }
-        return result;
     }
 }

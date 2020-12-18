@@ -3,9 +3,9 @@ package model;
 import java.io.Serializable;
 
 public class Card implements Comparable<Card>, Serializable {
-    private final int rank, suit;
     private static final String[] RANKS = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"};
     private static final String[] SUITS = {"Clubs", "Hearts", "Spades", "Diamonds"};
+    private final int rank, suit;
     private final int value;
 
 
