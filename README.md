@@ -9,7 +9,7 @@ Liam Riche B00789989
 
 # Design & Development 
 
-We decided to use GitHub for our project as this was easy to assign ticket to so that we would know what everyone is doing and working on.
+We decided to use GitHub for our project as this was easy to assign tickets so that we would know what everyone is doing and working on.
 
 We had an agile board would use for project management:
 
@@ -21,7 +21,7 @@ from this you will also be able to see the pull requests with all the code we ha
 
 ## The Deck
 
-The deck – we decided to go and develop an abstract stack data structure as we felt a a stack is the best way to hold a deck as it is first in last out. This way it will make it easier to shuffle the deck as well as keep popping from the top of the deck
+The deck – we decided to go and develop an abstract stack data structure as we felt a stack is the best way to hold a deck as it is first in last out. This way it will make it easier to shuffle the deck as well as keep popping from the top of the deck.
 
 ## Project Structure
 
@@ -30,7 +30,7 @@ We have separated the project structure into 2 packages:
 - collection
 - model
 
-The `collection` package stores all of the models used to simulate collections - stacks and queues, in addition to a `Node` (an item in the aforementioned collections). 
+The `collection` package stores all the models used to simulate collections - stacks and queues, in addition to a `Node` (an item in the aforementioned collections). 
 
 The `model` class stores the models which we use for the game, that being `Card`, `Deck`, `ElevensDeck`, `Game`, `PlayerMoveHistory` and `UserInput`.
 
@@ -51,23 +51,23 @@ The testing – we have done a couple tests such as DeckTest, InputTest and a ge
 
 #### UserInput test
 
-the userinput tests are used to find problems in the users inputs into the game (e.g. picking pairs and triplets)
+the user input tests are used to find problems in the users inputs into the game (e.g. picking pairs and triplets)
 has 4 test categories
 
 these tests cover:
 * ensuring a user input will return one of 9 different enums for informing the user of correct inputs (10 tests)
 * only sets first and second card but not the third card when valid2card enum is returned (1 test)
 * sets all 3 cards if valid3card enum is returned (1 test)
-* sanitises inputs from user to remove all spaces and commas and raises input to uppercase (13 tests)
+* Sanitise inputs from user to remove all spaces and commas and raises input to uppercase (13 tests)
 
 #### Deck test
 
-the decktest tests cover cases to show that the deck class functions as a normal deck of cards would.
+the deck test tests cover cases to show that the deck class functions as a normal deck of cards would.
 has 4 test categories in it 
 
 these tests cover:
 * Deck has 52 cards in it (no jokers, we don't like jokers)
-* when drawing a card it removes one from the stack and doesnt take more or less than 1 card.
+* when drawing a card it removes one from the stack and doesn't take more or less than 1 card.
 * deck does not have duplicate cards in it (a full deck of 52 king of clubs does not make the game play well)
 * deck is shuffled on initialisation (makes each game different)
 
