@@ -29,7 +29,7 @@ public class UserInput implements Serializable {
         return status != Valid2Card && status != Valid3Card;
     }
 
-    private static class UserInputValidator {
+    public static class UserInputValidator {
         public static UserInputStatus validate(String input, Game context) {
             val parsedInput = formatInput(input);
             if (parsedInput.isEmpty()) {
@@ -57,7 +57,7 @@ public class UserInput implements Serializable {
 
         }
 
-        private static String formatInput(String input) {
+        public static String formatInput(String input) {
             return input.replaceAll(" ", "")
                     .replaceAll(",", "")
                     .toUpperCase();

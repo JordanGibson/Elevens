@@ -23,6 +23,14 @@ public class Game implements Serializable {
     private PlayerMoveHistory playerMoveHistory;
     private ElevensDeck deck;
 
+    public Game() {
+        this.deck = new ElevensDeck(this);
+    }
+
+    public Game(ElevensDeck deck) {
+        this.deck = deck;
+    }
+
     public void start() {
         deck = new ElevensDeck(this);
         initBoard();
@@ -170,7 +178,7 @@ public class Game implements Serializable {
     }
 
     // In here, we should be validating if the selected character is in the game board, and if there is a card at this location on the board
-    protected boolean isSelectionValid(char selection) {
+    public boolean isSelectionValid(char selection) {
         return !(selection < 'A' || selection > 'I' || inPlay[selection - ASCII_OFFSET] == null);
     }
 
