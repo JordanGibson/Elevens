@@ -4,19 +4,31 @@ import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import model.Deck;
 import model.Game;
 import model.UserInput;
+import net.bytebuddy.implementation.bytecode.Addition;
+import org.apache.commons.lang3.CharUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 
 import static model.UserInput.UserInputStatus.*;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
+import static org.mockito.AdditionalMatchers.not;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.doReturn;
+
 
 @SuppressWarnings("ALL")
 @RunWith(DataProviderRunner.class)
 public class UserInputTest {
+
+    private static final String VALID_2_CARD = "ab";
+    private static final String VALID_3_CARD = "abc";
 
     @Mock
     private Game context;
@@ -24,56 +36,46 @@ public class UserInputTest {
     @Before
     public void setUp() {
         MockitoAnnotations.openMocks(this);
+        doReturn(true).when(context).isSelectionValid(not(eq('V')));
     }
 
     @DataProvider
-    public static Object[][] badInput() {
+    public static Object[][] inputs() {
         return new Object[][]{
-                {"test", InvalidNumberOfCards},
-                {"abc", Valid3Card},
-                {"ab", Valid2Card},
-                {"aa", SameCard},
-                {"av", InvalidSecondCard},
-                {"va", InvalidFirstCard},
-                {"abv", InvalidThirdCard},
-                {"vab", InvalidFirstCard},
+                {"", Empty},
                 {"x", Hint},
-        };
-    }
-
-    @DataProvider
-    public static Object[][] goodInput() {
-        return new Object[][]{
-                {"di", true},//correct 2 card input
-                {"abc", true},//correct 3 card input
-                {"eh", true},//correct 2 card input
-                {"fg", true},//correct 2 card input
-                {"eg", false},//incorrect 2 card input
-                {"ah", false},//incorrect 2 card input
+                {"test", InvalidNumberOfCards},
+                {"aa", SameCard},
+                {"va", InvalidFirstCard},
+                {"vab", InvalidFirstCard},
+                {"av", InvalidSecondCard},
+                {"abv", InvalidThirdCard},
+                {VALID_2_CARD, Valid2Card},
+                {VALID_3_CARD, Valid3Card}
         };
     }
 
 
     @Test
-    @UseDataProvider("badInput")
-    public void badInputShouldReturnErr(String input, UserInput.UserInputStatus expected) {
-        Game.initDeck();
-        UserInput userInput = new UserInput(input);
+    @UseDataProvider("inputs")
+    public void testUserInputStatusResults(String input, UserInput.UserInputStatus expected) {
+        UserInput userInput = new UserInput(input, context);
         assertThat(userInput.status, is(expected));
     }
 
     @Test
-    @UseDataProvider("goodInput")
-    public void correctInputDoenstBreak(String input, boolean expected) {
-        Deck deck = new Deck(1,2,3,4,5,6,7,10,11,12);
-        for (int i = 0; i < 9; i++) {
-            inPlay[i] = deck.drawCard();
-        }
-        displayBoard();
-        System.out.println("initial deck ^^\n");
-        UserInput userInput = new UserInput(input);
-        assertThat(applyUserInput(userInput), is(expected));
-        displayBoard();
-        System.out.println("after change deck ^^");
+    public void shouldSetFirstAndSecondCardButNotThirdForValid2Card() {
+        UserInput userInput = new UserInput(VALID_2_CARD, context);
+        assertThat(userInput.first, is('A'));
+        assertThat(userInput.second, is('B'));
+        assertThat(CharUtils.isAsciiPrintable(userInput.third), is(false));
+    }
+
+    @Test
+    public void shouldSetFirstSecondAndThirdCardForValid3Card() {
+        UserInput userInput = new UserInput(VALID_3_CARD, context);
+        assertThat(userInput.first, is('A'));
+        assertThat(userInput.second, is('B'));
+        assertThat(userInput.third, is('C'));
     }
 }
