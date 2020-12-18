@@ -17,7 +17,9 @@ The way this works is that a ticket is first opened and assigned for someone to 
 
 You can see the whole preparation, plan, development and testing over at our git hub - [https://github.com/JordanGibson/Elevens](https://github.com/JordanGibson/Elevens)
 
-from this you will also be able to see the pull requests with all the code we have added as well as the reasons as to why we have chosen to create the project like this
+From this you will also be able to see the pull requests with all the code we have added as well as the reasons as to why we have chosen to create the project like this
+
+We used maven for our build tool as it's easy to install dependencies
 
 ## The Deck
 
