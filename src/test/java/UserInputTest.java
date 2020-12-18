@@ -40,7 +40,6 @@ public class UserInputTest {
                 {"fg", true},//correct 2 card input
                 {"eg", false},//incorrect 2 card input
                 {"ah", false},//incorrect 2 card input
-                {"ab", false},//incorrect 3 card input
         };
     }
 
