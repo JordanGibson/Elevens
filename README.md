@@ -11,7 +11,7 @@ Liam Riche B00789989
 
 We decided to use GitHub for our project as this was easy to assign ticket to so that we would know what everyone is doing and working on.
 
-We had a 4 column list that we would use:
+We had an agile board would use for project management:
 
 The way this works is that a ticket is first opened and assigned for someone to work on then once it has been assigned it is then moved to development section then once it is developed it is then moved to the review stage where the other 2 members of the group review and then either push it up to the master branch or comment on some changes to be made then once it has been finalised it is then moved to the done section where all the completed tickets go. This is how we planned out the development of the project.
 
@@ -25,7 +25,25 @@ The deck – we decided to go and develop an abstract stack data structure as we
 
 ## Project Structure
 
-The project Structure -
+We have separated the project structure into 2 packages:
+
+- collection
+- model
+
+The `collection` package stores all of the models used to simulate collections - stacks and queues, in addition to a `Node` (an item in the aforementioned collections). 
+
+The `model` class stores the models which we use for the game, that being `Card`, `Deck`, `ElevensDeck`, `Game`, `PlayerMoveHistory` and `UserInput`.
+
+- `Card` simply stores the value, suit and rank of a card.
+- `Deck (abstract class)` stores a stack of cards, with some additional features which can be performed on a deck (drawing a card for example)
+- `ElevensDeck` extends `Deck` and adds features specific to `Elevens` , such as validating a player move, or generating a valid hint
+- `Game` contains the main logic for playing a game of `Elevens` - main features such as starting a game, displaying the menu, making a turn, starting an automated playthrough etc.
+- `PlayerMoveHistory` stores a collection of `PlayerMoveHistoryEntry`s, which is later used to replay the game
+- `UserInput` is used for input validation and parsing
+
+The only Java file not contained within a package is `Program.java` which was left out by design as it is the file which accesses all of the other classes. It is the one used to run the game.
+
+![File Structure screenshot](https://i.snipboard.io/w67NuY.jpg)
 
 ## Testing
 
