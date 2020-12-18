@@ -2,18 +2,20 @@ package model;
 
 import lombok.val;
 
+import java.io.Serializable;
+
 import static model.UserInput.UserInputStatus.*;
 
-public class UserInput {
+public class UserInput implements Serializable {
 
     public final char first;
     public final char second;
     public final char third;
     public final UserInputStatus status;
 
-    public UserInput(String input) {
-        status = UserInputValidator.validate(input);
-        if (!status.equals(Valid2Card) && !status.equals(Valid3Card)) {
+    public UserInput(String input, Game context) {
+        status = UserInputValidator.validate(input, context);
+        if (isInvalid()) {
             first = second = third = '?';
             return;
         }
@@ -23,8 +25,12 @@ public class UserInput {
         third = parsedInput.length() == 3 ? parsedInput.charAt(2) : 0;
     }
 
+    public boolean isInvalid() {
+        return status != Valid2Card && status != Valid3Card;
+    }
+
     private static class UserInputValidator {
-        public static UserInputStatus validate(String input) {
+        public static UserInputStatus validate(String input, Game context) {
             val parsedInput = formatInput(input);
             if (parsedInput.isEmpty()) {
                 return Empty;
@@ -40,11 +46,11 @@ public class UserInput {
 
             if (first == second || first == third || second == third) {
                 return SameCard;
-            } else if (!Game.isSelectionValid(first)) {
+            } else if (!context.isSelectionValid(first)) {
                 return InvalidFirstCard;
-            } else if (!Game.isSelectionValid(second)) {
+            } else if (!context.isSelectionValid(second)) {
                 return InvalidSecondCard;
-            } else if (parsedInput.length() > 2 && !Game.isSelectionValid(third)) {
+            } else if (parsedInput.length() > 2 && !context.isSelectionValid(third)) {
                 return InvalidThirdCard;
             }
             return third == 0 ? Valid2Card : Valid3Card;

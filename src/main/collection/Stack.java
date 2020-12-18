@@ -2,9 +2,10 @@ package collection;
 
 import lombok.val;
 
+import java.io.Serializable;
 import java.util.EmptyStackException;
 
-public class Stack<T> implements StackInterface<T> {
+public class Stack<T> implements StackInterface<T>, Serializable {
     private MyNode<T> topNode;
 
     public void push(T newEntry) {
@@ -26,10 +27,6 @@ public class Stack<T> implements StackInterface<T> {
 
     public boolean isEmpty() {
         return (topNode == null);
-    }
-
-    public void clear() {
-        topNode = null;
     }
 
 }
