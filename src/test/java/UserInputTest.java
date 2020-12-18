@@ -2,25 +2,19 @@ import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import lombok.val;
-import model.Deck;
 import model.Game;
 import model.UserInput;
-import net.bytebuddy.implementation.bytecode.Addition;
 import org.apache.commons.lang3.CharUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.*;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import static model.UserInput.UserInputStatus.*;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.AdditionalMatchers.not;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
 
 
@@ -55,6 +49,7 @@ public class UserInputTest {
                 {VALID_3_CARD, Valid3Card}
         };
     }
+
     @DataProvider
     public static Object[][] inputSanitising() {
         return new Object[][]{
@@ -85,29 +80,29 @@ public class UserInputTest {
     @UseDataProvider("inputs")
     public void testUserInputStatusResults(String input, UserInput.UserInputStatus expected) {
         UserInput userInput = new UserInput(input, context);
-        assertThat(userInput.status, is(expected));
+        assertTrue(userInput.status.equals(expected));
     }
 
     @Test
     public void shouldSetFirstAndSecondCardButNotThirdForValid2Card() {
         UserInput userInput = new UserInput(VALID_2_CARD, context);
-        assertThat(userInput.first, is('A'));
-        assertThat(userInput.second, is('B'));
-        assertThat(CharUtils.isAsciiPrintable(userInput.third), is(false));
+        assertTrue(userInput.first == 'A');
+        assertTrue(userInput.second == 'B');
+        assertTrue(CharUtils.isAsciiPrintable(userInput.third) == false);
     }
 
     @Test
     public void shouldSetFirstSecondAndThirdCardForValid3Card() {
         UserInput userInput = new UserInput(VALID_3_CARD, context);
-        assertThat(userInput.first, is('A'));
-        assertThat(userInput.second, is('B'));
-        assertThat(userInput.third, is('C'));
+        assertTrue(userInput.first == 'A');
+        assertTrue(userInput.second == 'B');
+        assertTrue(userInput.third == 'C');
     }
 
     @Test
     @UseDataProvider("inputSanitising")
     public void testUserInputSanitisation(String input, String expected) {
         val sanitizedInput = UserInput.UserInputValidator.formatInput(input);
-        assertThat(sanitizedInput, is(expected));
+        assertTrue(sanitizedInput.equals(expected));
     }
 }
