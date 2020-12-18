@@ -3,9 +3,10 @@ package model;
 import collection.Stack;
 import lombok.val;
 
+import java.io.Serializable;
 import java.util.Random;
 
-public class Deck extends Stack<Card> {
+public class Deck extends Stack<Card> implements Serializable {
     private static final Random RANDOM = new Random();
     private int currentSize = 52;
 
@@ -19,13 +20,6 @@ public class Deck extends Stack<Card> {
         }
         for (int j : sequentialArray) {
             push(new Card(j));
-        }
-    }
-
-    public Deck(int... cards) {
-        currentSize = cards.length;
-        for (var card : cards) {
-            push(new Card(card));
         }
     }
 
