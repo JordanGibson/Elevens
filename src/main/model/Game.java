@@ -1,5 +1,7 @@
 package model;
 
+import lombok.val;
+
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
@@ -30,7 +32,7 @@ public class Game {
     private static boolean isStalemate() {
         // Better approach
         for (char first = ASCII_OFFSET; first < 9 + ASCII_OFFSET; first++) {
-            Card firstCard = getCardFromBoard(first);
+            val firstCard = getCardFromBoard(first);
             if (firstCard == null || firstCard.isFaceCard()) continue;
             if (getUniqueInPlayCardValues(false)
                     .anyMatch(value -> (firstCard.getRankValue() + value) == 9)) {
@@ -63,9 +65,9 @@ public class Game {
     }
 
     public static Boolean isValidPlayerMove(char first, char second, char third) {
-        Card firstCard = getCardFromBoard(first);
-        Card secondCard = getCardFromBoard(second);
-        Card thirdCard = getCardFromBoard(third);
+        val firstCard = getCardFromBoard(first);
+        val secondCard = getCardFromBoard(second);
+        val thirdCard = getCardFromBoard(third);
         // If a third card is present, then we assume we are removing a JQK triple
         if (thirdCard != null) {
             // JQK triple
@@ -77,12 +79,12 @@ public class Game {
     }
 
     private static boolean isValid2CardSelection(Card first, Card second) {
-        int sum = first.getRankValue() + second.getRankValue();
+        val sum = first.getRankValue() + second.getRankValue();
         return !first.isFaceCard() && !second.isFaceCard() && sum == 9;
     }
 
     private static boolean isValidJQKSelection(Card first, Card second, Card third) {
-        int sum = first.getRankValue() + second.getRankValue() + third.getRankValue();
+        val sum = first.getRankValue() + second.getRankValue() + third.getRankValue();
         return first.getRankValue() != second.getRankValue() &&
                 first.getRankValue() != third.getRankValue() &&
                 second.getRankValue() != third.getRankValue() &&
@@ -92,8 +94,8 @@ public class Game {
     // Returns if the move was valid or not
     public static boolean makeTurn() {
         System.out.println("Enter Letters: ");
-        var rawUserInput = new Scanner(System.in).nextLine();
-        UserInput userInput = new UserInput(rawUserInput);
+        val rawUserInput = new Scanner(System.in).nextLine();
+        val userInput = new UserInput(rawUserInput);
         if (userInput.status == Hint) {
             displayHint();
         }
@@ -149,7 +151,7 @@ public class Game {
     }
 
     public static boolean makeValidMove() {
-        UserInput userInput = new UserInput(getHint());
+        val userInput = new UserInput(getHint());
         if (userInput.status.equals(Empty)) return false;
         applyUserInput(userInput);
         return true;

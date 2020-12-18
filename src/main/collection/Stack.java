@@ -1,18 +1,20 @@
 package collection;
 
+import lombok.val;
+
 import java.util.EmptyStackException;
 
 public class Stack<T> implements StackInterface<T> {
     private MyNode<T> topNode;
 
     public void push(T newEntry) {
-        MyNode<T> newNode = new MyNode<>(newEntry);
+        val newNode = new MyNode<>(newEntry);
         newNode.setNext(topNode);
         topNode = newNode;
     }
 
     public T pop() {
-        T dataToReturn = peek();
+        val dataToReturn = peek();
         topNode = topNode.getNext();
         return dataToReturn;
     }
