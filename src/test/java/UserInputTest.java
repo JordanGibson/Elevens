@@ -1,20 +1,26 @@
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
+import lombok.val;
+import model.Deck;
 import model.Game;
 import model.UserInput;
+import net.bytebuddy.implementation.bytecode.Addition;
 import org.apache.commons.lang3.CharUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 
 import static model.UserInput.UserInputStatus.*;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.mockito.AdditionalMatchers.not;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.doReturn;
 
 
@@ -49,6 +55,30 @@ public class UserInputTest {
                 {VALID_3_CARD, Valid3Card}
         };
     }
+    @DataProvider
+    public static Object[][] inputSanitising() {
+        return new Object[][]{
+                {"abc", "ABC"},
+                {"a,b,c", "ABC"},
+                {"a    b   c", "ABC"},
+                {"a,,,,,,,,b,,,c", "ABC"},
+                {"a     ,b      , c,,,", "ABC"},
+                {",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,ab,,,,,,,,,c                ", "ABC"},
+                {"ab", "AB"},
+                {",,,,,,,a   b ,", "AB"},
+                {",a,b,,,,,   , , , ,,,, , ,", "AB"},
+                {"a", "A"},
+                {"              a               ", "A"},
+                {",,,,,,,,,,,,,a,,,,,,,,,,,,,,,", "A"},
+                {" , , , ,a, , , , , ", "A"},
+                {"aBc", "ABC"},
+                {"ABC", "ABC"},
+                {"AbC", "ABC"},
+                {"A   b, C", "ABC"},
+                {",,,,a,,, B     ,", "AB"},
+                {"     , ,,A ,,,,,   , ,b,,,,      ", "AB"}
+        };
+    }
 
 
     @Test
@@ -72,5 +102,12 @@ public class UserInputTest {
         assertThat(userInput.first, is('A'));
         assertThat(userInput.second, is('B'));
         assertThat(userInput.third, is('C'));
+    }
+
+    @Test
+    @UseDataProvider("inputSanitising")
+    public void testUserInputSanitisation(String input, String expected) {
+        val sanitizedInput = UserInput.UserInputValidator.formatInput(input);
+        assertThat(sanitizedInput, is(expected));
     }
 }
