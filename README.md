@@ -48,7 +48,7 @@ the decktest tests cover cases to show that the deck class functions as a normal
 has 4 test categories in it 
 
 these tests cover:
-* Deck has 52 cards in it (no jokers we don't like jokers)
+* Deck has 52 cards in it (no jokers, we don't like jokers)
 * when drawing a card it removes one from the stack and doesnt take more or less than 1 card.
 * deck does not have duplicate cards in it (a full deck of 52 king of clubs does not make the game play well)
 * deck is shuffled on initialisation (makes each game different)
