@@ -1,6 +1,7 @@
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
+import lombok.val;
 import model.Deck;
 import model.Game;
 import model.UserInput;
@@ -54,6 +55,24 @@ public class UserInputTest {
                 {VALID_3_CARD, Valid3Card}
         };
     }
+    @DataProvider
+    public static Object[][] inputSanitising() {
+        return new Object[][]{
+                {"abc", "ABC"},
+                {"a,b,c", "ABC"},
+                {"a    b   c", "ABC"},
+                {"a,,,,,,,,b,,,c", "ABC"},
+                {"a     ,b      , c,,,", "ABC"},
+                {",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,ab,,,,,,,,,c                ", "ABC"},
+                {"ab", "AB"},
+                {",,,,,,,a   b ,", "AB"},
+                {",a,b,,,,,   , , , ,,,, , ,", "AB"},
+                {"a", "A"},
+                {"              a               ", "A"},
+                {",,,,,,,,,,,,,a,,,,,,,,,,,,,,,", "A"},
+                {" , , , ,a, , , , , ", "A"},
+        };
+    }
 
 
     @Test
@@ -77,5 +96,12 @@ public class UserInputTest {
         assertThat(userInput.first, is('A'));
         assertThat(userInput.second, is('B'));
         assertThat(userInput.third, is('C'));
+    }
+
+    @Test
+    @UseDataProvider("inputSanitising")
+    public void testUserInputSanitisation(String input, String expected) {
+        val sanitizedInput = UserInput.UserInputValidator.formatInput(input);
+        assertThat(sanitizedInput, is(expected));
     }
 }
