@@ -77,5 +77,6 @@ these tests cover:
 
 there is only one test in card test, which checks to make sure the tostring() method correctly returns the name of the card chosen.
 
+## Collborative Video
 
-
+https://youtu.be/_hwE1g5TSrc
